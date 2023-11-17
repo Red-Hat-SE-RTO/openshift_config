@@ -1,0 +1,50 @@
+# Authentication Configuration
+idp_providers:
+  ## Google SSO Configuration
+  # - type: Google
+  #   name: RedHatSSO
+  #   clientID: "clientID"
+  #   clientSecret: "clientSecret"
+  #   hostedDomain: "redhat.com" # optional - restricts logins to users with this domain
+
+  # ## LDAP Configuration
+  # - type: LDAP
+  #   name: LabLDAP
+  #   bindDN: "bindDN"
+  #   bindPassword: "bindPassword"
+  #   cacert: "cacert"
+  #   url: "url"
+  #   url_filter: "url_filter"
+  #   # mappingMethod: claim # optional, defaults to claim
+  #   # insecure: false # optional, defaults to false
+  #   group_sync:
+  #     group_crbs:
+  #       - group: admins
+  #         crb: cluster-admin
+  #       - group: labadmins
+  #         crb: cluster-admin
+  #     groupBaseDN: "groupBaseDN"
+  #     groupFilter: (|(cn=labadmins)(cn=admins))
+  #     userBaseDN: "userBaseDN"
+  #     groupUIDNameMappings:
+  #       - ldapGroup: cn=labadmins,groupBaseDN
+  #         openshiftGroup: labadmins
+  #       - ldapGroup: cn=admins,groupBaseDN
+  #         openshiftGroup: admins
+
+## Active Directory Configuration
+
+  #  - type: ActiveDirectory
+  #    name: Corp AD
+  #    mappingMethod: claim
+  #    bindDN: "ad-svc-acct-name"
+  #    bindPassword: "{{ lookup('file', '/home/kemo/.idm-bind-pw') }}"
+  #    cacert: "{{ lookup('file', '/home/kemo/win-ad-cert.pem') }}"
+  #    url: "ldaps://domaincontroller/DC=demo,DC=openshift,DC=pub?sAMAccountName?sub"
+
+# NTP Configuration
+#ntp_sources:
+#  - type: server
+#    address: 192.168.42.14
+#  - type: pool
+#    address: 0.rhel.pool.ntp.org
