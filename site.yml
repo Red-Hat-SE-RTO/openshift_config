@@ -1,0 +1,20 @@
+---
+- name: OpenShift Cluster Configuration
+  hosts: all
+  gather_facts: false
+  
+  environment:
+    KUBECONFIG: "{{ KUBECONFIG }}"
+  
+  # pre_tasks:
+  # - ansible.builtin.include_tasks:
+  #     file: "tasks/preflight/conntest_ocp.yaml"
+  
+  roles:
+    - ocp4-idp
+#    - ocp4-role-bindings
+#    - ocp4-ntp-configuration
+#    - ocp4-monitoring
+
+  tasks:
+

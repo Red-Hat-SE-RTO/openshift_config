@@ -1,0 +1,31 @@
+---
+# tasks file for ocp4-idp
+- name: Set the blank fact for IDPs
+  ansible.builtin.set_fact:
+    idp_collection: []
+
+- name: Loop through the idp_providers
+  ansible.builtin.include_tasks: loop.yml
+  loop: "{{ idp_providers }}"
+  loop_control:
+    loop_var: provider
+
+- name: Add the IDP collection to the cluster
+  kubernetes.core.k8s:
+    state: present
+    merge_type:
+      - strategic-merge
+      - merge
+    definition:
+      apiVersion: config.openshift.io/v1
+      kind: OAuth
+      metadata:
+        name: cluster
+      spec:
+        identityProviders: "{{ idp_collection }}"
+
+- name: Loop through the idp_providers for any LDAP group sync setups
+  ansible.builtin.include_tasks: ldap-group-sync.yml
+  loop: "{{ idp_providers }}"
+  loop_control:
+    loop_var: provider
