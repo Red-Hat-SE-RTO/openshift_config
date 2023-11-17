@@ -13,7 +13,7 @@
   roles:
     - ocp4-idp
 #    - ocp4-role-bindings
-#    - ocp4-ntp-configuration
+    - ocp4-ntp-configuration
 #    - ocp4-monitoring
 
   tasks:
