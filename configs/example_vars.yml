@@ -1,3 +1,27 @@
+
+# Node Configuration
+
+#infrastructure_id: '<cluster_name-uuid>'
+# cluster_nodes:
+#   - name: control-1
+#     type: control-plane
+#   - name: control-2
+#     type: control-plane
+#   - name: control-3
+#     type: control-plane
+#   - name: infra-1
+#     type: infra
+#   - name: infra-2
+#     type: infra
+#   - name: infra-3
+#     type: infra
+#   - name: worker-1
+#     type: worker
+#   - name: worker-2
+#     type: worker
+#   - name: worker-3
+#     type: worker
+
 # Authentication Configuration
 idp_providers:
   ## Google SSO Configuration
