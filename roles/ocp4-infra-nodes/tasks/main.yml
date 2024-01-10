@@ -1,6 +1,23 @@
 ---
 # https://access.redhat.com/solutions/5034771
 
+# If we're using machinesets, this creates the infra machineset
+- name: Create an infrastructure node machine set
+  when: machineset_item.type in ["infra"]
+  kubernetes.core.k8s:
+    kind: MachineSet
+    apiVersion: machine.openshift.io/v1beta1
+    state: present
+    template: infra-machineset.yaml.j2
+  register: k8s_run
+  until: k8s_run is not failed
+  delay: 10
+  retries: 3
+  loop: "{{ machine_sets }}"
+  loop_control:
+    loop_var: machineset_item
+
+# If we're not using machinesets, this labels existing nodes
 - name: Add the infra node label for the Infrastructure Nodes
   when: node_item.type in ["infra"]
   kubernetes.core.k8s:
@@ -62,7 +79,6 @@
         nodeSelector:
           matchLabels:
             node-role.kubernetes.io/infra: ""
-
 - name: Set the default Ingress Controller to run on the Infra Nodes
   kubernetes.core.k8s:
     state: present

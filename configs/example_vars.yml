@@ -21,6 +21,13 @@
 #     type: worker
 #   - name: worker-3
 #     type: worker
+# machine_sets:
+#   - name: worker
+#     type: worker
+#     replicas: 3
+#   - name: infra
+#     type: worker
+#     replicas: 3
 
 # Authentication Configuration
 idp_providers:
