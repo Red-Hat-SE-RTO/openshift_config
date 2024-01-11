@@ -25,9 +25,18 @@
 #   - name: worker
 #     type: worker
 #     replicas: 3
+#     availabilityZone: us-east-2a # If AWS
 #   - name: infra
 #     type: worker
 #     replicas: 3
+#     availabilityZone: us-east-2a # If AWS
+
+# Platform Configuration
+# platform:
+#   aws:
+#     ami_id: ami-0545fae7edbbbf061
+#     region: us-east-2
+    
 
 # Authentication Configuration
 idp_providers:

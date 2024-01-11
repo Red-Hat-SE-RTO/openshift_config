@@ -1,0 +1,67 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  creationTimestamp: null
+  labels:
+    machine.openshift.io/cluster-api-cluster: {{ infrastructure_id }}
+  name: {{ infrastructure_id }}-infra-{{ machineset_item.availabilityZone }}
+  namespace: openshift-machine-api
+spec:
+  replicas: {{ machineset_item.replicas }}
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: {{ infrastructure_id }}
+      machine.openshift.io/cluster-api-machineset: {{ infrastructure_id }}-infra-{{ machineset_item.availabilityZone }}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        machine.openshift.io/cluster-api-cluster: {{ infrastructure_id }}
+        machine.openshift.io/cluster-api-machine-role: infra
+        machine.openshift.io/cluster-api-machine-type: infra
+        machine.openshift.io/cluster-api-machineset: {{ infrastructure_id }}-infra-{{ machineset_item.availabilityZone }}
+    spec:
+      metadata:
+        creationTimestamp: null
+        labels:
+          node-role.kubernetes.io/infra: ""
+      taints:
+      - key: node-role.kubernetes.io/infra
+        effect: NoSchedule
+      - key: node-role.kubernetes.io/infra
+        effect: NoExecute
+      providerSpec:
+        value:
+          ami:
+            id: {{ platform.aws.ami_id }}
+          apiVersion: machine.openshift.io/v1beta1
+          blockDevices:
+            - ebs:
+                iops: 0
+                volumeSize: 120
+                volumeType: gp2
+          credentialsSecret:
+            name: aws-cloud-credentials
+          deviceIndex: 0
+          iamInstanceProfile:
+            id: {{ infrastructure_id }}-worker-profile
+          instanceType: m6i.large
+          kind: AWSMachineProviderConfig
+          placement:
+            availabilityZone: {{ machineset_item.availabilityZone }}
+            region: {{ platform.aws.region }}
+          securityGroups:
+            - filters:
+                - name: tag:Name
+                  values:
+                    - {{ infrastructure_id }}-worker-sg
+          subnet:
+            filters:
+              - name: tag:Name
+                values:
+                  - {{ infrastructure_id }}-private-{{ machineset_item.availabilityZone }}
+          tags:
+            - name: kubernetes.io/cluster/{{ infrastructure_id }}
+              value: owned
+          userDataSecret:
+            name: worker-user-data

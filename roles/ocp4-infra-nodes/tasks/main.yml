@@ -2,11 +2,11 @@
 # https://access.redhat.com/solutions/5034771
 
 # If we're using machinesets, this creates the infra machineset
+# https://access.redhat.com/documentation/en-us/openshift_container_platform/4.14/html-single/machine_management/index#creating-infrastructure-machinesets
 - name: Create an infrastructure node machine set
   when: machineset_item.type in ["infra"]
   kubernetes.core.k8s:
     kind: MachineSet
-    apiVersion: machine.openshift.io/v1beta1
     state: present
     template: infra-machineset.yaml.j2
   register: k8s_run
