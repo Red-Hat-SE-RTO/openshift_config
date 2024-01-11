@@ -8,7 +8,7 @@
   kubernetes.core.k8s:
     kind: MachineSet
     state: present
-    template: infra-machineset.yaml.j2
+    template: "infra-machineset-{{ platform_type }}.yaml.j2"
   register: k8s_run
   until: k8s_run is not failed
   delay: 10

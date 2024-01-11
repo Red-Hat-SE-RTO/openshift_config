@@ -2,6 +2,7 @@
 # Node Configuration
 
 #infrastructure_id: '<cluster_name-uuid>'
+#platform_type: aws
 # cluster_nodes:
 #   - name: control-1
 #     type: control-plane
